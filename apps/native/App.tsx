@@ -1,33 +1,32 @@
-import { StyleSheet, Text, View } from "react-native";
+import React from "react";
 import { StatusBar } from "expo-status-bar";
-import { Button } from "@repo/ui";
+import { SafeAreaProvider } from "react-native-safe-area-context";
+import useCachedResources from "./hooks/useCachedResources";
+import Navigation from "./navigation";
+import { ClerkProvider } from "@clerk/clerk-expo";
+import { tokenCache } from "./cache";
+import * as SplashScreen from "expo-splash-screen";
 
-export default function Native() {
-  return (
-    <View style={styles.container}>
-      <Text style={styles.header}>Native</Text>
-      <Button
-        onClick={() => {
-          console.log("Pressed!");
-          alert("Pressed!");
-        }}
-        text="Boop"
-      />
-      <StatusBar style="auto" />
-    </View>
-  );
+// Your publishable Key goes here
+const publishableKey = "pk_XXXXXXXXXXXXXXXXXXX";
+
+export default function App() {
+  const isLoadingComplete = useCachedResources();
+
+  React.useEffect(() => {
+    SplashScreen.preventAutoHideAsync();
+  }, []);
+
+  if (!isLoadingComplete) {
+    return null;
+  } else {
+    return (
+      <ClerkProvider publishableKey={publishableKey} tokenCache={tokenCache}>
+        <SafeAreaProvider>
+          <Navigation />
+          <StatusBar />
+        </SafeAreaProvider>
+      </ClerkProvider>
+    );
+  }
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: "#fff",
-    alignItems: "center",
-    justifyContent: "center",
-  },
-  header: {
-    fontWeight: "bold",
-    marginBottom: 20,
-    fontSize: 36,
-  },
-});

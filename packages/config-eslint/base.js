@@ -31,6 +31,7 @@ module.exports = {
     'class-methods-use-this': 'warn',
     'no-param-reassign': 'warn',
     camelcase: 'warn',
-    'no-unused-vars': ['warn', { argsIgnorePattern: 'next' }]
+    'no-unused-vars': ['warn', { argsIgnorePattern: 'next' }],
+    "@typescript-eslint/no-unused-vars": 'warn',
   },
 };
