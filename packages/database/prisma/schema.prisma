@@ -5,8 +5,8 @@
 // Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
 
 generator client {
-  provider = "prisma-client-js"
-  binaryTargets = ["native", "linux-musl-openssl-3.0.x","debian-openssl-1.0.x"]
+  provider      = "prisma-client-js"
+  binaryTargets = ["native", "linux-musl-openssl-3.0.x", "debian-openssl-1.1.x","debian-openssl-3.0.x"]
 }
 
 datasource db {
@@ -15,21 +15,27 @@ datasource db {
 }
 
 model User {
-  id            String    @id @default(cuid())
-  username      String?
-  email         String?   @unique
+  id       String   @id @default(cuid())
+  username String?
+  email    String?  @unique
+  isActive  Boolean  @default(true)
+  wallets  Wallet[]
 }
 
 model Wallet {
-  id String @id @default(cuid())
-  userId String
-  balance Float
+  id           String        @id @default(cuid())
+  userId       String
+  balance      Float
+  isFrozen  Boolean  @default(false)
+  user         User          @relation(fields: [userId], references: [id])
+  transactions Transaction[]
 }
 
 model Transaction {
-  id String @id @default(cuid())
-  walletId String
-  amount Float
-  type String
+  id        String   @id @default(cuid())
+  walletId  String
+  amount    Float
+  type      String
   createdAt DateTime @default(now())
+  wallet    Wallet   @relation(fields: [walletId], references: [id])
 }
