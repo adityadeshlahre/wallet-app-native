@@ -3,7 +3,7 @@ import * as WebBrowser from "expo-web-browser";
 import { Text, TouchableOpacity } from "react-native";
 import { useOAuth } from "@clerk/clerk-expo";
 import { styles } from "./Styles";
-import { useWamUpBrowser } from "../hooks/useWarmUpBrowser";
+import { useWamUpBrowser } from "./../../../apps/native/hooks/useWarmUpBrowser";
 
 WebBrowser.maybeCompleteAuthSession();
 
@@ -19,7 +19,7 @@ export function OAuthButtons() {
       const { createdSessionId, signIn, signUp, setActive } =
         await startOAuthFlow();
 
-      if (createdSessionId) {
+      if (createdSessionId && setActive) {
         setActive({ session: createdSessionId });
       } else {
         // Use signIn or signUp for next steps such as MFA
