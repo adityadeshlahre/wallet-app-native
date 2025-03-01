@@ -32,7 +32,7 @@
     "typescript": "^5.7.2"
   },
   "dependencies": {
-    "@clerk/clerk-expo": "^2.6.3",
+    "@clerk/clerk-expo": "^2.8.2",
     "expo-web-browser": "14.0.1",
     "react-native": "0.76.5"
   }
